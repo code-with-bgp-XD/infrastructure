@@ -87,8 +87,11 @@ cd ..
 > 用于环境隔离，防止打乱本机python环境
 > 
 > 当前目录为
-> reseach
-> └── infrastructure
+
+``` text
+reseach
+└── infrastructure
+```
 
 ```bash
 python3 -m venv .venv
@@ -109,9 +112,12 @@ source .venv/bin/activate
 
 > 如果pip安装太慢可以考虑使用国内pip镜像源
 > 当前目录为
-> reseach
-> ├── .venv
-> └── infrastructure
+
+```text
+reseach
+├── .venv
+└── infrastructure
+```
 
 **安装containernet**
 
