@@ -54,9 +54,9 @@
 <td>containernet 会帮你安装docker</td>
 </tr>
 <tr>
-<td >ryu</td>
+<td >frr</td>
 <td>docker pull quay.io/frrouting/frr:10.2.1</td>
-<td><a href="https://quay.io/repository/frrouting/frr?tab=tags" target="_blank">docker镜像地址</a><br/>ryu源码修改教程：todo</td>
+<td><a href="https://quay.io/repository/frrouting/frr?tab=tags" target="_blank">docker镜像地址</a><br/>frr源码修改教程：todo</td>
 </tr>
 <tr>
 <td >containerlab</td>
