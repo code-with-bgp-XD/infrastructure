@@ -124,6 +124,7 @@ reseach
 
 ```bash
 sudo apt-get install ansible
+sudo ansible-playbook -i "localhost," -c local ./infrastructurecontainernet/ansible/install.yml
 # 如果你想修改代码立刻生效，通过此方法安装
 pip install -e ./infrastructure/containernet --no-binary :all:
 # 普通安装模式
