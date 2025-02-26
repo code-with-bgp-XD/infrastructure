@@ -77,7 +77,7 @@ mkdir -p ~/research && cd ~/research
 
 ```bash
 git clone https://github.com/code-with-bgp-XD/infrastructure.git
-git submodule init
+git submodule init && git submodule update
 ```
 
 ### 2. 创建python虚拟环境并激活
