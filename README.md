@@ -140,3 +140,8 @@ pip install ./infrastructure/ryu-patch
 ```bash
 ryu-manager --version
 ```
+
+# 可能遇到的问题
+
+1. 使用`ryu-manager`时提示dns/....py出现问题，`collections.Mapping`
+- 将`collections.Mapping` 改为 `collections.abc.Mapping` （python3 >= 3.10）
