@@ -111,6 +111,7 @@ source .venv/bin/activate
 
 
 > 如果pip安装太慢可以考虑使用国内pip镜像源
+> 
 > 当前目录为
 
 ```text
