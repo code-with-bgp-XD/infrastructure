@@ -78,7 +78,7 @@ mkdir -p ~/research && cd ~/research
 ```bash
 git clone https://github.com/code-with-bgp-XD/infrastructure.git
 cd ./infrastructure
-git submodule init && git submodule update
+git submodule update --init --recursive
 cd ..
 ```
 
