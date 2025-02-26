@@ -1,0 +1,6 @@
+[submodule "ryu-patch"]
+	path = ryu-patch
+	url = https://github.com/code-with-bgp-XD/ryu-patch.git
+[submodule "containernet"]
+	path = containernet
+	url = https://github.com/containernet/containernet
