@@ -7,6 +7,7 @@
 | containerlab | https://containerlab.dev/       | 为docker搭建网络拓扑的工具（yaml配置文件）         |
 | containernet | https://containernet.github.io/ | 支持sdn/docker的网络拓扑搭建工具（python代码实现） |
 | ryu          | https://ryu-sdn.org/            | python实现的sdn控制器，支持bgp                     |
+| os-ken          | https://github.com/openstack/os-ken/            | python实现的sdn控制器，支持bgp, 为ryu的后续维护版本    |
 
 <table style="text-align: center;">
 <tr>
@@ -64,6 +65,21 @@
 <td>-</td>
 </tr>
 </table>
+
+## os-ken 容器
+
+### 1. 拉取镜像 
+
+```bash
+docker pull ghcr.io/code-with-bgp-xd/infrastructure-osken:latest
+```
+
+### 2. 与containerlab配合使用
+
+在本机安装好containerlab的情况下
+
+参考 https://github.com/code-with-bgp-XD/frr-utilities/blob/main/ryu-bgpspeaker/os-ken/p2p/osken.clab.yaml
+
 
 ## sdn+ovs
 
