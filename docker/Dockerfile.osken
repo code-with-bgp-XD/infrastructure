@@ -1,0 +1,41 @@
+FROM python:3.11-slim as prepare
+
+RUN apt update && \
+    apt install -y --no-install-recommends \
+    git
+
+WORKDIR /app
+
+RUN git clone https://github.com/openstack/os-ken.git && \
+    cd os-ken && \
+    git checkout 3.0.1
+
+FROM python:3.11-slim as runner
+
+WORKDIR /app
+
+COPY --from=prepare /app/os-ken /app/os-ken
+
+ADD ./osken-bgp.patch .
+
+# 安装构建依赖
+RUN apt update && \
+    apt install -y --no-install-recommends \
+    git patch && \
+    pip install --upgrade pip && \
+    pip install pbr paramiko && \
+    cd /app/os-ken && \
+    patch -p1 < /app/osken-bgp.patch && \
+    pip install .
+
+# 清理
+RUN rm -rf /app/os-ken && \
+    apt remove -y git patch && \
+    apt autoremove -y && \
+    apt clean
+
+RUN apt update \
+    && apt install -y --no-install-recommends \
+    iproute2 iputils-ping openssh-client
+
+CMD ["bash"]

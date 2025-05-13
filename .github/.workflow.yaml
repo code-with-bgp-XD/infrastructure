@@ -1,0 +1,79 @@
+name: Create and publish Docker images
+
+on:
+  push:
+    branches: ["main", "dev"]
+  workflow_dispatch:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+# Defines custom environment variables for the workflow
+env:
+  REGISTRY: ghcr.io
+  REPO_NAME: ${{ github.repository }}
+  CURRENT_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+
+jobs:
+  build-and-push-images:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        docker_config:
+          - dockerfile: docker/Dockerfile.osken
+            image_suffix: osken
+        platform:
+          - linux/amd64
+
+    permissions:
+      contents: read
+      packages: write
+      attestations: write
+      id-token: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Determine Tag or Branch Type
+        id: tag_or_branch_check
+        run: |
+          BRANCH_NAME=$(echo "$CURRENT_BRANCH_NAME" | sed 's|/|_|g')
+          if [[ ${BRANCH_NAME} == main ]]; then
+            echo "TAG_NAME=latest" >> $GITHUB_ENV
+          elif [[ ${BRANCH_NAME} == dev ]]; then
+            echo "TAG_NAME=canary" >> $GITHUB_ENV
+          else
+            echo "TAG_NAME=canary-${BRANCH_NAME}" >> $GITHUB_ENV
+          fi
+
+      - name: Set image name with suffix
+        id: image_name
+        run: |
+          IMAGE_NAME="${REPO_NAME}-${{ matrix.docker_config.image_suffix }}"
+          echo "FULL_IMAGE_NAME=${IMAGE_NAME}" >> $GITHUB_ENV
+          echo "Image name set to: ${IMAGE_NAME}"
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.FULL_IMAGE_NAME }}
+          tags: ${{ env.TAG_NAME }}
+
+      - name: Build and push Docker image
+        id: push
+        uses: docker/build-push-action@471d1dc4e07e5cdedd4c2171150001c434f0b7a4
+        with:
+          context: docker/.
+          file: ${{ matrix.docker_config.dockerfile }}
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
