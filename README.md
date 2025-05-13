@@ -71,7 +71,7 @@
 ### 1. 拉取镜像 
 
 ```bash
-docker pull ghcr.io/code-with-bgp-xd/bgp-infra-osken:latest
+docker pull ghcr.io/code-with-bgp-xd/infrastructure-osken:latest
 ```
 
 ### 2. 与containerlab配合使用

@@ -10,7 +10,7 @@ on:
 # Defines custom environment variables for the workflow
 env:
   REGISTRY: ghcr.io
-  REPO_NAME: bgp-infra
+  REPO_NAME: ${{ github.repository }}
   CURRENT_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
